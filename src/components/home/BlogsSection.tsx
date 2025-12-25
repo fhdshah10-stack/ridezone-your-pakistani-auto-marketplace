@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 export function BlogsSection() {
   return (
-    <section className="py-12 -mx-4 px-4 md:-mx-8 md:px-8 lg:-mx-[calc((100vw-1280px)/2+2rem)] lg:px-[calc((100vw-1280px)/2+2rem)] bg-[#121212] border-t border-white/[0.03]">
+    <section className="py-12 -mx-4 px-4 md:-mx-8 md:px-8 lg:-mx-[calc((100vw-1280px)/2+2rem)] lg:px-[calc((100vw-1280px)/2+2rem)] bg-background border-t border-white/[0.03]">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <h2 className="section-title mb-0">Latest Blogs</h2>
