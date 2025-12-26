@@ -7,7 +7,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import logo from '@/assets/ridezone-logo.png';
 
 const navLinks = [
-  { name: 'Used Cars', path: '/' },
+  { name: 'Used Cars', path: '/used-cars' },
   { name: 'New Cars', path: '/new-cars' },
   { name: 'Bikes', path: '/bikes' },
   { name: 'Videos', path: '/videos' },

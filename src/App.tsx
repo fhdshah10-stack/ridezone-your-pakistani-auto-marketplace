@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import PostAd from "./pages/PostAd";
+import UsedCars from "./pages/UsedCars";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -19,6 +20,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/used-cars" element={<UsedCars />} />
             <Route path="/post-ad" element={<PostAd />} />
             <Route path="/new-cars" element={<Index />} />
             <Route path="/bikes" element={<Index />} />
