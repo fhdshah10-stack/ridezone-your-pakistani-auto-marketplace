@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Search, MapPin, ChevronRight, ChevronLeft, ChevronDown, ChevronUp,
+  Search, MapPin, ChevronRight, ChevronDown, ChevronUp,
   Shield, Users, Zap, Check, Car, Wrench, Eye, Sparkles, BadgeCheck
 } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
+import { HorizontalCarousel, CarouselItem } from '@/components/ui/horizontal-carousel';
 import { usedCars, managedCars, blogs } from '@/data/mockData';
 
 // Pakistani Cities
@@ -89,21 +90,15 @@ export default function UsedCars() {
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [showAllCities, setShowAllCities] = useState(false);
-  const [categoryIndex, setCategoryIndex] = useState(0);
-  const [showAllYears, setShowAllYears] = useState(false);
   const [activeInspectionIndex, setActiveInspectionIndex] = useState(0);
 
   // Animate inspection checkpoints
-  useState(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       setActiveInspectionIndex((prev) => (prev + 1) % inspectionCategories.length);
     }, 2000);
     return () => clearInterval(interval);
-  });
-
-  const visibleCategories = categories.slice(categoryIndex, categoryIndex + 4);
-  const canScrollLeft = categoryIndex > 0;
-  const canScrollRight = categoryIndex + 4 < categories.length;
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -252,42 +247,43 @@ export default function UsedCars() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {usedCars.filter(car => car.isFeatured).slice(0, 4).map((car, idx) => (
-              <motion.div
-                key={car.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -8 }}
-                className="listing-card group"
-              >
-                <Link to={`/car/${car.id}`}>
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    <img 
-                      src={car.image} 
-                      alt={car.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <span className="absolute top-3 left-3 bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full">
-                      Featured
-                    </span>
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-semibold text-foreground mb-2 line-clamp-1">{car.title}</h3>
-                    <p className="price-tag mb-3">{formatPrice(car.price)}</p>
-                    <div className="flex items-center justify-between text-sm text-muted-foreground">
-                      <span>{car.year} • {car.transmission}</span>
-                      <span className="flex items-center gap-1">
-                        <MapPin className="h-3 w-3" /> {car.location}
+          <HorizontalCarousel gap={24}>
+            {usedCars.filter(car => car.isFeatured).map((car, idx) => (
+              <CarouselItem key={car.id} className="w-[280px] sm:w-[300px]">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -8 }}
+                  className="listing-card group h-full"
+                >
+                  <Link to={`/car/${car.id}`}>
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      <img 
+                        src={car.image} 
+                        alt={car.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <span className="absolute top-3 left-3 bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full">
+                        Featured
                       </span>
                     </div>
-                  </div>
-                </Link>
-              </motion.div>
+                    <div className="p-4">
+                      <h3 className="font-semibold text-foreground mb-2 line-clamp-1">{car.title}</h3>
+                      <p className="price-tag mb-3">{formatPrice(car.price)}</p>
+                      <div className="flex items-center justify-between text-sm text-muted-foreground">
+                        <span>{car.year} • {car.transmission}</span>
+                        <span className="flex items-center gap-1">
+                          <MapPin className="h-3 w-3" /> {car.location}
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              </CarouselItem>
             ))}
-          </div>
+          </HorizontalCarousel>
         </div>
       </section>
 
@@ -301,42 +297,43 @@ export default function UsedCars() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <HorizontalCarousel gap={24}>
             {managedCars.map((car, idx) => (
-              <motion.div
-                key={car.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -8 }}
-                className="listing-card group"
-              >
-                <Link to={`/car/${car.id}`}>
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    <img 
-                      src={car.image} 
-                      alt={car.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <span className="absolute top-3 left-3 bg-card/90 backdrop-blur-sm text-primary text-xs font-semibold px-3 py-1 rounded-full border border-primary/30 flex items-center gap-1">
-                      <Sparkles className="h-3 w-3" /> Managed
-                    </span>
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-semibold text-foreground mb-2 line-clamp-1">{car.title}</h3>
-                    <p className="price-tag mb-3">{formatPrice(car.price)}</p>
-                    <div className="flex items-center justify-between text-sm text-muted-foreground">
-                      <span>{car.mileage?.toLocaleString()} km</span>
-                      <span className="flex items-center gap-1">
-                        <MapPin className="h-3 w-3" /> {car.location}
+              <CarouselItem key={car.id} className="w-[280px] sm:w-[320px]">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -8 }}
+                  className="listing-card group h-full"
+                >
+                  <Link to={`/car/${car.id}`}>
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      <img 
+                        src={car.image} 
+                        alt={car.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <span className="absolute top-3 left-3 bg-card/90 backdrop-blur-sm text-primary text-xs font-semibold px-3 py-1 rounded-full border border-primary/30 flex items-center gap-1">
+                        <Sparkles className="h-3 w-3" /> Managed
                       </span>
                     </div>
-                  </div>
-                </Link>
-              </motion.div>
+                    <div className="p-4">
+                      <h3 className="font-semibold text-foreground mb-2 line-clamp-1">{car.title}</h3>
+                      <p className="price-tag mb-3">{formatPrice(car.price)}</p>
+                      <div className="flex items-center justify-between text-sm text-muted-foreground">
+                        <span>{car.mileage?.toLocaleString()} km</span>
+                        <span className="flex items-center gap-1">
+                          <MapPin className="h-3 w-3" /> {car.location}
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              </CarouselItem>
             ))}
-          </div>
+          </HorizontalCarousel>
         </div>
       </section>
 
@@ -479,40 +476,22 @@ export default function UsedCars() {
         <div className="container mx-auto px-4">
           <h2 className="section-title">Used Cars by Category</h2>
           
-          <div className="relative">
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => setCategoryIndex(Math.max(0, categoryIndex - 1))}
-                disabled={!canScrollLeft}
-                className="p-2 rounded-full bg-card border border-border disabled:opacity-30 hover:border-primary transition-colors"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-
-              <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-4">
-                {visibleCategories.map((category, idx) => (
-                  <motion.div
-                    key={category.name}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: idx * 0.05 }}
-                    className="p-6 rounded-xl bg-card border border-border hover:border-primary/50 transition-all cursor-pointer group text-center"
-                  >
-                    <span className="text-3xl mb-3 block">{category.icon}</span>
-                    <span className="font-medium text-foreground group-hover:text-primary transition-colors">{category.name}</span>
-                  </motion.div>
-                ))}
-              </div>
-
-              <button
-                onClick={() => setCategoryIndex(Math.min(categories.length - 4, categoryIndex + 1))}
-                disabled={!canScrollRight}
-                className="p-2 rounded-full bg-card border border-border disabled:opacity-30 hover:border-primary transition-colors"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </button>
-            </div>
-          </div>
+          <HorizontalCarousel gap={16}>
+            {categories.map((category, idx) => (
+              <CarouselItem key={category.name} className="w-[160px] sm:w-[180px]">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: idx * 0.05 }}
+                  viewport={{ once: true }}
+                  className="p-6 rounded-xl bg-card border border-border hover:border-primary/50 transition-all cursor-pointer group text-center h-full"
+                >
+                  <span className="text-3xl mb-3 block">{category.icon}</span>
+                  <span className="font-medium text-foreground group-hover:text-primary transition-colors">{category.name}</span>
+                </motion.div>
+              </CarouselItem>
+            ))}
+          </HorizontalCarousel>
         </div>
       </section>
 
@@ -521,17 +500,18 @@ export default function UsedCars() {
         <div className="container mx-auto px-4">
           <h2 className="section-title">Used Cars by Budget</h2>
           
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
+          <HorizontalCarousel gap={16}>
             {budgetOptions.map((budget) => (
-              <Link
-                key={budget}
-                to={`/used-cars/budget/${budget.toLowerCase().replace(/ /g, '-')}`}
-                className="p-4 rounded-xl bg-card border border-border text-center hover:border-primary/50 hover:bg-muted transition-all group"
-              >
-                <span className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors">{budget}</span>
-              </Link>
+              <CarouselItem key={budget} className="w-[140px] sm:w-[160px]">
+                <Link
+                  to={`/used-cars/budget/${budget.toLowerCase().replace(/ /g, '-')}`}
+                  className="p-4 rounded-xl bg-card border border-border text-center hover:border-primary/50 hover:bg-muted transition-all group block h-full"
+                >
+                  <span className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors">{budget}</span>
+                </Link>
+              </CarouselItem>
             ))}
-          </div>
+          </HorizontalCarousel>
         </div>
       </section>
 
@@ -540,18 +520,19 @@ export default function UsedCars() {
         <div className="container mx-auto px-4">
           <h2 className="section-title">Used Cars by Body Type</h2>
           
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
+          <HorizontalCarousel gap={16}>
             {bodyTypes.map((type) => (
-              <Link
-                key={type.name}
-                to={`/used-cars/body/${type.name.toLowerCase()}`}
-                className="p-4 rounded-xl bg-card border border-border text-center hover:border-primary/50 transition-all group"
-              >
-                <span className="text-2xl mb-2 block">{type.icon}</span>
-                <span className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors">{type.name}</span>
-              </Link>
+              <CarouselItem key={type.name} className="w-[120px] sm:w-[140px]">
+                <Link
+                  to={`/used-cars/body/${type.name.toLowerCase()}`}
+                  className="p-4 rounded-xl bg-card border border-border text-center hover:border-primary/50 transition-all group block h-full"
+                >
+                  <span className="text-2xl mb-2 block">{type.icon}</span>
+                  <span className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors">{type.name}</span>
+                </Link>
+              </CarouselItem>
             ))}
-          </div>
+          </HorizontalCarousel>
         </div>
       </section>
 
@@ -560,27 +541,18 @@ export default function UsedCars() {
         <div className="container mx-auto px-4">
           <h2 className="section-title">Used Cars by Year</h2>
           
-          <div className="flex flex-wrap gap-3">
-            {(showAllYears ? years : years.slice(0, 8)).map((year) => (
-              <Link
-                key={year}
-                to={`/used-cars/year/${year}`}
-                className="px-6 py-3 rounded-lg bg-card border border-border hover:border-primary/50 hover:bg-muted transition-all text-foreground font-medium"
-              >
-                {year}
-              </Link>
+          <HorizontalCarousel gap={12}>
+            {years.map((year) => (
+              <CarouselItem key={year} className="w-[100px]">
+                <Link
+                  to={`/used-cars/year/${year}`}
+                  className="px-6 py-3 rounded-lg bg-card border border-border hover:border-primary/50 hover:bg-muted transition-all text-foreground font-medium block text-center"
+                >
+                  {year}
+                </Link>
+              </CarouselItem>
             ))}
-          </div>
-
-          {years.length > 8 && (
-            <button
-              onClick={() => setShowAllYears(!showAllYears)}
-              className="mt-4 flex items-center gap-2 text-primary hover:text-primary/80 font-medium"
-            >
-              {showAllYears ? 'Show Less' : 'Show More Years'}
-              {showAllYears ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-            </button>
-          )}
+          </HorizontalCarousel>
         </div>
       </section>
 
@@ -589,32 +561,33 @@ export default function UsedCars() {
         <div className="container mx-auto px-4">
           <h2 className="section-title">Featured Dealers</h2>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <HorizontalCarousel gap={24}>
             {featuredDealers.map((dealer, idx) => (
-              <motion.div
-                key={dealer.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                viewport={{ once: true }}
-                className="p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-all"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <h3 className="font-semibold text-foreground">{dealer.name}</h3>
-                  {dealer.verified && (
-                    <BadgeCheck className="h-5 w-5 text-primary flex-shrink-0" />
-                  )}
-                </div>
-                <p className="text-sm text-muted-foreground mb-4 flex items-center gap-1">
-                  <MapPin className="h-4 w-4" /> {dealer.location}
-                </p>
-                <p className="text-sm text-muted-foreground mb-4">{dealer.inventory} cars in inventory</p>
-                <Button variant="outline" className="w-full">
-                  View Inventory
-                </Button>
-              </motion.div>
+              <CarouselItem key={dealer.id} className="w-[280px] sm:w-[300px]">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  viewport={{ once: true }}
+                  className="p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-all h-full"
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <h3 className="font-semibold text-foreground">{dealer.name}</h3>
+                    {dealer.verified && (
+                      <BadgeCheck className="h-5 w-5 text-primary flex-shrink-0" />
+                    )}
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-4 flex items-center gap-1">
+                    <MapPin className="h-4 w-4" /> {dealer.location}
+                  </p>
+                  <p className="text-sm text-muted-foreground mb-4">{dealer.inventory} cars in inventory</p>
+                  <Button variant="outline" className="w-full">
+                    View Inventory
+                  </Button>
+                </motion.div>
+              </CarouselItem>
             ))}
-          </div>
+          </HorizontalCarousel>
         </div>
       </section>
 
@@ -623,39 +596,40 @@ export default function UsedCars() {
         <div className="container mx-auto px-4">
           <h2 className="section-title">Used Car Advice & Tips</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <HorizontalCarousel gap={24}>
             {blogs.map((blog, idx) => (
-              <motion.div
-                key={blog.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                viewport={{ once: true }}
-                className="group cursor-pointer"
-              >
-                <Link to={`/blog/${blog.id}`}>
-                  <div className="rounded-xl overflow-hidden bg-card border border-border hover:border-primary/30 transition-all">
-                    <div className="aspect-video overflow-hidden">
-                      <img 
-                        src={blog.thumbnail} 
-                        alt={blog.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
+              <CarouselItem key={blog.id} className="w-[300px] sm:w-[340px]">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  viewport={{ once: true }}
+                  className="group cursor-pointer h-full"
+                >
+                  <Link to={`/blog/${blog.id}`}>
+                    <div className="rounded-xl overflow-hidden bg-card border border-border hover:border-primary/30 transition-all h-full">
+                      <div className="aspect-video overflow-hidden">
+                        <img 
+                          src={blog.thumbnail} 
+                          alt={blog.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                      </div>
+                      <div className="p-4">
+                        <h3 className="font-semibold text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                          {blog.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground line-clamp-2 mb-3">{blog.excerpt}</p>
+                        <span className="text-primary text-sm font-medium flex items-center gap-1">
+                          Read More <ChevronRight className="h-4 w-4" />
+                        </span>
+                      </div>
                     </div>
-                    <div className="p-4">
-                      <h3 className="font-semibold text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-                        {blog.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground line-clamp-2 mb-3">{blog.excerpt}</p>
-                      <span className="text-primary text-sm font-medium flex items-center gap-1">
-                        Read More <ChevronRight className="h-4 w-4" />
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
+                  </Link>
+                </motion.div>
+              </CarouselItem>
             ))}
-          </div>
+          </HorizontalCarousel>
         </div>
       </section>
 
