@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Menu, X, User, LogOut } from 'lucide-react';
+import { Phone, Menu, X, User, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import logo from '@/assets/ridezone-logo.png';
@@ -23,7 +23,7 @@ const navLinks = [{
 }];
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  
   const {
     isAuthenticated,
     user,
@@ -61,9 +61,9 @@ export function Navbar() {
 
           {/* Right Section */}
           <div className="flex items-center gap-3">
-            {/* Search */}
-            <Button variant="ghost" size="icon" onClick={() => setIsSearchOpen(!isSearchOpen)} className="text-muted-foreground hover:text-foreground">
-              <Search className="h-5 w-5" />
+            {/* Phone/Contact */}
+            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+              <Phone className="h-5 w-5" />
             </Button>
 
             {/* Auth */}
@@ -91,24 +91,6 @@ export function Navbar() {
           </div>
         </div>
 
-        {/* Search Bar */}
-        <AnimatePresence>
-          {isSearchOpen && <motion.div initial={{
-            height: 0,
-            opacity: 0
-          }} animate={{
-            height: 'auto',
-            opacity: 1
-          }} exit={{
-            height: 0,
-            opacity: 0
-          }} className="overflow-hidden pb-4">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                <input type="text" placeholder="Search cars, bikes, keywords..." className="input-field w-full pl-12" autoFocus />
-              </div>
-            </motion.div>}
-        </AnimatePresence>
       </div>
 
       {/* Mobile Menu */}
