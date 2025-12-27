@@ -45,7 +45,7 @@ const Index = () => {
               <img 
                 src="/ridezone-logo.png" 
                 alt="RideZone" 
-                className="h-24 md:h-32 lg:h-40 w-auto object-contain -mr-1"
+                className="h-24 md:h-32 lg:h-40 w-auto object-contain -mr-3"
                 onError={(e) => {
                   e.currentTarget.onerror = null;
                 }}
