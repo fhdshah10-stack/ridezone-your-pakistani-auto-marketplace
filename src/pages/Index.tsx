@@ -15,14 +15,15 @@ import { AuthModal } from '@/components/auth/AuthModal';
 const Index = () => {
   return <div className="min-h-screen bg-background relative overflow-x-hidden">
       {/* Extended gradient from top to middle of hero (search bar) */}
-      <div className="absolute top-0 left-0 right-0 h-[500px] pointer-events-none" style={{
+      <div className="absolute top-0 left-0 right-0 h-[600px] pointer-events-none" style={{
       background: `
             linear-gradient(
               180deg,
               hsla(357, 81%, 20%, 0.6) 0%,
-              hsla(357, 81%, 15%, 0.5) 25%,
-              hsla(357, 81%, 10%, 0.4) 45%,
-              hsla(0, 0%, 6%, 0.95) 70%,
+              hsla(357, 81%, 15%, 0.5) 20%,
+              hsla(357, 81%, 12%, 0.5) 40%,
+              hsla(357, 81%, 8%, 0.4) 55%,
+              hsla(0, 0%, 6%, 0.95) 75%,
               hsl(var(--background)) 100%
             )
           `
@@ -40,11 +41,11 @@ const Index = () => {
         <section className="relative py-8 md:py-16">
           <div className="container mx-auto px-4">
             {/* Logo and Heading side by side */}
-            <div className="flex items-center justify-center gap-6 md:gap-8 mb-10">
+            <div className="flex items-center justify-center gap-4 md:gap-5 mb-10">
               <img 
                 src="/ridezone-logo.png" 
                 alt="RideZone" 
-                className="h-24 md:h-32 lg:h-40 w-auto object-contain"
+                className="h-24 md:h-32 lg:h-40 w-auto object-contain -mr-1"
                 onError={(e) => {
                   e.currentTarget.onerror = null;
                 }}
