@@ -40,17 +40,19 @@ const Index = () => {
         <section className="relative py-8 md:py-16">
           <div className="container mx-auto px-4">
             {/* Logo and Heading side by side */}
-            <div className="flex items-center justify-center gap-4 md:gap-6 mb-10">
+            <div className="flex items-center justify-center gap-6 md:gap-8 mb-10">
               <img 
                 src="/ridezone-logo.png" 
                 alt="RideZone" 
-                className="h-10 md:h-14 lg:h-16 w-auto object-contain"
+                className="h-24 md:h-32 lg:h-40 w-auto object-contain"
                 onError={(e) => {
-                  // Fallback to assets logo
                   e.currentTarget.onerror = null;
                 }}
               />
-              <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-foreground">Pakistan's Trusted Automobile Trading Platform</h1>
+              <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-foreground text-center">
+                <span className="block">Pakistan's Trusted</span>
+                <span className="block">Automobile Trading Platform</span>
+              </h1>
             </div>
             <HeroSearch />
           </div>
