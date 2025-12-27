@@ -14,22 +14,22 @@ import { GetAppSection } from '@/components/home/GetAppSection';
 import { AuthModal } from '@/components/auth/AuthModal';
 const Index = () => {
   return <div className="min-h-screen bg-background relative overflow-x-hidden">
-      {/* Full page gradient starting from navbar */}
-      <div className="absolute top-0 left-0 right-0 h-[700px] pointer-events-none" style={{
+      {/* Extended gradient from top to middle of hero (search bar) */}
+      <div className="absolute top-0 left-0 right-0 h-[500px] pointer-events-none" style={{
       background: `
             linear-gradient(
               180deg,
-              hsla(357, 81%, 18%, 0.5) 0%,
-              hsla(357, 81%, 12%, 0.35) 15%,
-              hsla(0, 0%, 8%, 0.9) 40%,
-              hsl(0, 0%, 6%) 65%,
+              hsla(357, 81%, 20%, 0.6) 0%,
+              hsla(357, 81%, 15%, 0.5) 25%,
+              hsla(357, 81%, 10%, 0.4) 45%,
+              hsla(0, 0%, 6%, 0.95) 70%,
               hsl(var(--background)) 100%
             )
           `
     }} />
-      {/* Subtle red glow at very top */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[140%] h-48 opacity-40 blur-3xl pointer-events-none" style={{
-      background: 'radial-gradient(ellipse at center top, hsla(357, 81%, 25%, 0.6) 0%, transparent 70%)'
+      {/* Stronger red glow at very top */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[160%] h-64 opacity-50 blur-3xl pointer-events-none" style={{
+      background: 'radial-gradient(ellipse at center top, hsla(357, 81%, 30%, 0.7) 0%, transparent 70%)'
     }} />
       
       <Navbar />
@@ -37,11 +37,20 @@ const Index = () => {
       
       <main className="relative z-10">
         {/* Hero Section */}
-        <section className="relative py-12 md:py-20">
+        <section className="relative py-8 md:py-16">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-10">
-              <h1 className="text-3xl md:text-5xl font-bold text-foreground mb-4">Pakistan's Trusted Automobile Trading Platform</h1>
-              
+            {/* Logo and Heading side by side */}
+            <div className="flex items-center justify-center gap-4 md:gap-6 mb-10">
+              <img 
+                src="/ridezone-logo.png" 
+                alt="RideZone" 
+                className="h-10 md:h-14 lg:h-16 w-auto object-contain"
+                onError={(e) => {
+                  // Fallback to assets logo
+                  e.currentTarget.onerror = null;
+                }}
+              />
+              <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-foreground">Pakistan's Trusted Automobile Trading Platform</h1>
             </div>
             <HeroSearch />
           </div>
