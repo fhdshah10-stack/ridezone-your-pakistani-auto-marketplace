@@ -39,16 +39,14 @@ export function Navbar() {
     }
   };
   return <>
-    <nav className="sticky top-0 z-50 bg-transparent backdrop-blur-md border-b border-border/50">
+    <nav className="sticky top-0 z-50 bg-transparent backdrop-blur-md">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <Link to="/" className="flex-shrink-0">
-            <img src={logo} alt="RideZone" className="hidden md:block md:h-20 lg:h-24 w-auto object-contain" />
-          </Link>
+          {/* Empty space where logo was - now logo is in hero */}
+          <div className="flex-shrink-0 w-24 lg:w-32" />
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
+          {/* Desktop Navigation - shifted slightly left */}
+          <div className="hidden lg:flex items-center gap-8 -ml-8">
             {navLinks.map(link => <Link key={link.path} to={link.path} className={`nav-link py-2 ${location.pathname === link.path ? 'nav-link-active' : ''}`}>
                 {link.name}
                 {location.pathname === link.path && <motion.div layoutId="navIndicator" className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" transition={{
@@ -59,12 +57,13 @@ export function Navbar() {
               </Link>)}
           </div>
 
-          {/* Right Section */}
-          <div className="flex items-center gap-3">
-            {/* Phone/Contact */}
-            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+          {/* Right Section - shifted slightly left */}
+          <div className="flex items-center gap-3 -mr-2">
+            {/* Phone/Contact with number */}
+            <div className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
               <Phone className="h-5 w-5" />
-            </Button>
+              <span className="hidden sm:inline text-sm font-medium">+923000000</span>
+            </div>
 
             {/* Auth */}
             {isAuthenticated ? <div className="hidden md:flex items-center gap-2">
@@ -133,11 +132,5 @@ export function Navbar() {
       </AnimatePresence>
     </nav>
     
-    {/* Rolling UAN Strip */}
-    <div className="sticky top-16 md:top-20 z-40 overflow-hidden" style={{
-      backgroundColor: '#E11D27'
-    }}>
-      
-    </div>
     </>;
 }
