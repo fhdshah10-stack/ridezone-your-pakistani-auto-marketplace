@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { IntroAnimation } from "@/components/IntroAnimation";
 import Index from "./pages/Index";
 import PostAd from "./pages/PostAd";
 import UsedCars from "./pages/UsedCars";
@@ -17,6 +18,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <IntroAnimation />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
