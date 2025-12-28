@@ -42,17 +42,12 @@ const Index = () => {
           <div className="container mx-auto px-4">
             {/* Logo and Heading side by side */}
             <div className="flex items-center justify-center gap-4 md:gap-5 mb-10">
-              <img 
-                src="/ridezone-logo.png" 
-                alt="RideZone" 
-                className="h-24 md:h-32 lg:h-40 w-auto object-contain -mr-6 md:-mr-8"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                }}
-              />
+              <img src="/ridezone-logo.png" alt="RideZone" className="h-24 md:h-32 lg:h-40 w-auto object-contain -mr-6 md:-mr-8" onError={e => {
+              e.currentTarget.onerror = null;
+            }} />
               <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-foreground text-center">
-                <span className="block">Pakistan's Trusted</span>
-                <span className="block">Automobile Trading Platform</span>
+                <span className="block text-3xl">Pakistan's Trusted</span>
+                <span className="block text-3xl">Automobile Trading Platform</span>
               </h1>
             </div>
             <HeroSearch />
